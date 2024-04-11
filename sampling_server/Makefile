@@ -10,7 +10,7 @@ BIN_DIR := $(BUILD_DIR)/bin
 THIRD_PARTY_DIR := $(ROOT)/third_party
 PYTHON_DIR := $(ROOT)/python
 SRC_DIR = $(ROOT)/src
-
+CUDA_HOME := /usr/local/cuda11.7
 
 clean:
 	@rm -rf $(BUILD_DIR)
@@ -42,7 +42,7 @@ bin: core
 	@mkdir -p $(BIN_DIR)
 	@echo $(CORE_H)
 	$(NVCXX) $(NVCXXFLAGS) \
-		-L /usr/local/cuda/lib64 -L $(BUILD_DIR)/lib \
+		-L $(CUDA_HOME)/lib64 -L $(BUILD_DIR)/lib \
 		$(CORE_OBJ) \
 		-lcudart -lpthread \
 		-o $(BIN_DIR)/sampling_server -lrt
@@ -56,7 +56,7 @@ shared: core
 	@mkdir -p $(BIN_DIR)
 	@echo $(CORE_H)
 	$(NVCXX) $(NVCXXFLAGS) -shared \
-		-L /usr/local/cuda/lib64 \
+		-L $(CUDA_HOME)/lib64 \
 		$(CORE_OBJ) \
 		-lcudart -lpthread\
 		-o $(LIB_DIR)/libserver.so -lrt
