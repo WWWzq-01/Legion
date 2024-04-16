@@ -10,7 +10,7 @@ BIN_DIR := $(BUILD_DIR)/bin
 THIRD_PARTY_DIR := $(ROOT)/third_party
 PYTHON_DIR := $(ROOT)/python
 SRC_DIR = $(ROOT)/src
-CUDA_HOME := /usr/local/cuda11.7
+CUDA_HOME := /usr/local/cuda-11.7
 
 clean:
 	@rm -rf $(BUILD_DIR)
