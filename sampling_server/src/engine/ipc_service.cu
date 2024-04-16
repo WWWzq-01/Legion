@@ -34,7 +34,7 @@ class CUDAIPCEnv : public IPCEnv {
 public:
   CUDAIPCEnv(int32_t device_count){
     // std::cout<<"start initialize ipc env\n";
-    const char shmName[] = "simpleIPCshm";
+    const char shmName[] = "simpleIPCshmCXM";
     if (sharedMemoryCreate(shmName, sizeof(*shm_), &info_) != 0) {
       printf("Failed to create shared memory slab\n");
       exit(EXIT_FAILURE);
@@ -133,8 +133,8 @@ public:
 
   void InitializeSamplesBuffer(int32_t batch_size, int32_t num_ids, int32_t feature_dim, int32_t device_id, int32_t pipeline_depth) override {
     cudaSetDevice(device_id);
-    std::string ssr = "sem_r_";
-    std::string ssw = "sem_w_";
+    std::string ssr = "sem_r_CXM";
+    std::string ssw = "sem_w_CXM";
     (semr_[device_id]).resize(pipeline_depth);
     (semw_[device_id]).resize(pipeline_depth);
     for(int32_t i = 0; i < pipeline_depth; i++){
@@ -306,8 +306,8 @@ public:
         if(sem_close(sem) == -1){
           std::cout<<"close sem "<<i<<" "<<j<<" failed\n";
         }
-        std::string ssr = "sem_r_";
-        std::string ssw = "sem_w_";
+        std::string ssr = "sem_r_CXM";
+        std::string ssw = "sem_w_CXM";
         std::string ssri = ssr + std::to_string(i) + "_" + std::to_string(j);
         std::string sswi = ssw + std::to_string(i) + "_" + std::to_string(j);
         sem_unlink(ssri.c_str());

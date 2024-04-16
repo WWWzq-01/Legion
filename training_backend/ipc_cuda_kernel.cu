@@ -40,7 +40,7 @@ public:
     cudaGetDevice(&central_device);
     cudaCheckError();
     sharedMemoryInfo info;
-    const char shmName[] = "simpleIPCshm";
+    const char shmName[] = "simpleIPCshmCXM";
     if (sharedMemoryCreate(shmName, sizeof(*shm), &info) != 0) {
       printf("Failed to create shared memory slab\n");
       exit(EXIT_FAILURE);
@@ -73,8 +73,8 @@ public:
     semr_.resize(INTERBATCH_CON);
     semw_.resize(INTERBATCH_CON);
     for(int i = 0; i < INTERBATCH_CON; i++){
-      std::string ssr = "sem_r_";
-      std::string ssw = "sem_w_";
+      std::string ssr = "sem_r_CXM";
+      std::string ssw = "sem_w_CXM";
       std::string ssri = ssr + std::to_string(central_device) + "_" + std::to_string(i);
       std::string sswi = ssw + std::to_string(central_device) + "_" + std::to_string(i);
       semr_[i] = sem_open(ssri.c_str(), O_CREAT | O_RDWR, 0666, 0);
