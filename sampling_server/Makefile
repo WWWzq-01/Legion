@@ -61,6 +61,18 @@ shared: core
 		-lcudart -lpthread\
 		-o $(LIB_DIR)/libserver.so -lrt
 
+BAM_Feature_Store: gids_nvme.cu
+    $(NVCXX) $(NVCXXFLAGS) -shared \
+        -L $(CUDA_HOME)/lib64 \
+        $< \
+        -o $(LIB_DIR)/$@
+
+$(NVCXX) $(NVCXXFLAGS) -shared \
+        -L $(CUDA_HOME)/lib64 \
+        $(CORE_OBJ) \
+        -lcudart -lpthread\
+        -o $(LIB_DIR)/libserver.so -lrt
+
 ################################## core ########################################### 
 CORE_DIR := $(SRC_DIR)
 CORE_BUILT_DIR := $(BUILD_DIR)/built

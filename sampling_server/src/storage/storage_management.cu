@@ -1,6 +1,8 @@
 #include "storage_management.cuh"
 #include "storage_management_impl.cuh"
 
+#include <torch/torch.h>
+
 
 void StorageManagement::EnableP2PAccess(){
     int32_t device_count = -1;
@@ -153,6 +155,10 @@ void StorageManagement::LoadFeature(BuildInfo* info){
     all_labels.resize(node_num);
     int32_t* partition_index = (int32_t*)malloc(int64_t(node_num) * sizeof(int32_t));
     float* host_float_feature;
+
+    // added by Leg_BaM
+    BAM_Feature_Store bam_fs;
+    
 
     mmap_trainingset_read(training_path, training_ids);
     mmap_trainingset_read(validation_path, validation_ids);
